@@ -1,28 +1,47 @@
-/* Glance — midnight developer-tooling landing */
+/* Glance — elghaly palette (matches chatting.elghaly.dev tokens) */
+@import url("fonts.css");
 
 :root {
-  --ink: #0b1214;
-  --ink-soft: #121a19;
-  --ink-muted: #1a2423;
-  --gold: #2ee6c7;
-  --gold-warm: #6fe0c4;
-  --gold-dim: rgba(46, 230, 199, 0.22);
-  --text: #e8fbf6;
-  --text-muted: #9ab3ad;
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Outfit", system-ui, sans-serif;
+  color-scheme: dark;
+  --bg: #5a4fc0;
+  --bg-2: #6a5fd0;
+  --card: #0d0b1f;
+  --card-2: #17142f;
+  --line: #1c1838;
+  --line-2: #2e2856;
+  --text: #ffffff;
+  --muted: #b9b3e6;
+  --gold: #c9c2ff;
+  --gold-2: #e2deff;
+  --gold-ink: #17123d;
+  --pos: #7be3b0;
+  --radius: 22px;
+  --radius-sm: 20px;
+  --max: 72rem;
+  --gutter: 1rem;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --font: "Outfit", "Cairo", system-ui, sans-serif;
+  /* Legacy aliases used across Glance components */
+  --ink: var(--card);
+  --ink-soft: var(--card-2);
+  --ink-muted: var(--card-2);
+  --gold-warm: var(--gold-2);
+  --gold-dim: var(--line-2);
+  --text-muted: var(--muted);
+  --font-serif: var(--font);
+  --font-sans: var(--font);
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 2rem;
   --space-lg: 3.5rem;
   --space-xl: 5rem;
   --max-width: 36rem;
-  --transition: 0.25s ease;
-  --status-ok: #6b9e78;
+  --transition: 0.25s var(--ease);
+  --status-ok: var(--pos);
   --status-warn: #e6b84d;
   --status-fault: #c97a62;
   --status-blocking: #c96262;
-  --status-unknown: #9ab3ad;
+  --status-unknown: var(--muted);
 }
 
 *,
@@ -43,13 +62,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--ink);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(46, 230, 199, 0.08), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(46, 230, 199, 0.04), transparent);
+  background: linear-gradient(165deg, var(--bg-2) 0%, var(--bg) 42%, #4a42a8 100%);
   color: var(--text);
-  font-family: var(--font-sans);
-  font-weight: 300;
+  font-family: var(--font);
+  font-weight: 400;
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -64,10 +80,10 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
-  background: rgba(11, 18, 20, 0.92);
+  padding: 10px var(--gutter);
+  background: rgba(13, 11, 31, 0.72);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--gold-dim);
+  border-bottom: 1px solid var(--line-2);
 }
 
 .topbar a.brand {
@@ -84,9 +100,9 @@ body {
   border-radius: 10px;
   display: grid;
   place-items: center;
-  font: 700 15px var(--font-sans);
-  color: #04110a;
-  background: linear-gradient(135deg, #7ee8d4, #8a7cff);
+  font: 700 15px var(--font);
+  color: var(--gold-ink);
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
 }
 
 /* The letter is drawn by CSS so it is not part of the link's visible text:
@@ -111,24 +127,39 @@ body {
 
 .lang-switch {
   display: flex;
-  gap: 3px;
+  gap: 4px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px;
+}
+
+.lang-switch::-webkit-scrollbar {
+  display: none;
 }
 
 .lang-btn {
+  flex: none;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
   background: transparent;
-  border: 1px solid var(--gold-dim);
-  color: var(--text-muted);
-  padding: 5px 6px;
-  border-radius: 6px;
-  font-size: 10px;
+  color: var(--text);
+  font: 500 0.72rem var(--font);
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.lang-btn.on {
+.lang-btn.on,
+.lang-btn[aria-pressed="true"] {
   color: var(--text);
-  border-color: var(--gold);
+  border-color: var(--line);
+  background: var(--card);
 }
 
 .theme-wrap {
@@ -234,10 +265,9 @@ body {
 }
 
 .hero__title {
-  font-family: var(--font-serif);
+  font-family: var(--font);
   font-size: clamp(2rem, 8vw, 3.25rem);
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 700;
   line-height: 1.15;
   color: var(--text);
   margin-bottom: var(--space-sm);
@@ -263,7 +293,7 @@ body {
   color: var(--gold-warm);
   border: 1px solid var(--gold-dim);
   border-radius: 999px;
-  background: rgba(46, 230, 199, 0.06);
+  background: rgba(13, 11, 31, 0.45);
 }
 
 .signs {
@@ -352,9 +382,9 @@ body {
 
 .vocab-list__item {
   padding: var(--space-sm);
-  border: 1px solid var(--gold-dim);
-  border-radius: 2px;
-  background: var(--ink-soft);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  background: var(--card);
 }
 
 .vocab-list dt {
@@ -447,7 +477,7 @@ body {
 .demo-case.on {
   color: var(--text);
   border-color: var(--gold);
-  background: rgba(46, 230, 199, 0.08);
+  background: var(--card-2);
 }
 
 .demo-paste {
@@ -498,9 +528,9 @@ body {
 .trust-block {
   text-align: left;
   padding: var(--space-sm);
-  border: 1px solid var(--gold-dim);
-  border-radius: 2px;
-  background: var(--ink-soft);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  background: var(--card);
 }
 
 .trust-block__title {
@@ -562,20 +592,24 @@ body {
 }
 
 .btn {
-  display: inline-block;
-  padding: 0.55rem 0.9rem;
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
   background: var(--gold);
-  color: #04110a;
+  color: var(--gold-ink);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
+  transition: background-color var(--transition), color var(--transition);
 }
 
 .btn--ghost {
-  background: transparent;
+  background: var(--card);
   color: var(--text);
-  border: 1px solid var(--gold-dim);
+  border: 1px solid var(--line-2);
 }
 
 /* Main sections */
@@ -620,7 +654,7 @@ main {
   border-radius: 2px;
   padding: 0.35rem 0.75rem;
   margin-bottom: var(--space-sm);
-  background: rgba(46, 230, 199, 0.06);
+  background: rgba(13, 11, 31, 0.45);
 }
 
 .status-summary {
@@ -693,9 +727,9 @@ main {
 
 .card {
   padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--gold-dim);
-  border-radius: 2px;
-  background: var(--ink-soft);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  background: var(--card);
   transition:
     border-color var(--transition),
     background var(--transition),
@@ -909,11 +943,26 @@ main {
 }
 
 .footer p {
-  font-family: var(--font-serif);
+  font-family: var(--font);
   font-size: 0.875rem;
-  font-style: italic;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.footer__contact {
+  font-size: 0.8125rem;
+  color: var(--text);
+  max-width: 28rem;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+.page-menu-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .cards--loading,
@@ -954,13 +1003,8 @@ html[dir="rtl"] .card:hover {
   }
 
   .lang-btn {
-    padding: 4px 5px;
-    font-size: 9px;
-  }
-
-  .house {
-    width: calc(100% - 24px);
-    margin-top: 12px;
+    font-size: 0.68rem;
+    padding: 4px 8px;
   }
 
   .status-strip {

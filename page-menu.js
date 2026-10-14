@@ -21,8 +21,10 @@
     ".pm{position:relative;display:inline-flex;align-items:stretch;min-height:44px;" +
     "border:1px solid rgba(127,127,127,.45);border-radius:14px;font-size:1rem;line-height:1.2;" +
     "font-weight:600;background:rgba(127,127,127,.06)}" +
+    ".page-menu-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;width:100%}" +
     ".pm-main,.pm-more>summary{display:inline-flex;align-items:center;justify-content:center;" +
     "color:inherit;cursor:pointer;-webkit-user-select:none;user-select:none;white-space:nowrap}" +
+    ".pm--solo .pm-main{border-radius:13px}" +
     // Logical corners: the browser picks the outer edge from the text
     // direction, so a language switch to Arabic needs no script to follow it.
     ".pm-main{gap:.55rem;padding:0 1.1rem;border-start-start-radius:13px;" +
@@ -444,8 +446,31 @@
     { href: function (q) { return "https://cursor.com/link/prompt?text=" + q; }, label: "Open in Cursor" }
   ];
 
+  function buildSoloLink(label, href) {
+    var solo = document.createElement("div");
+    solo.className = "pm pm--solo";
+    solo.setAttribute("role", "group");
+    var link = document.createElement("a");
+    link.className = "pm-main";
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.innerHTML = SPARK + "<span>" + label + "</span>";
+    solo.appendChild(link);
+    return solo;
+  }
+
   function build(slot) {
     var q = encodeURIComponent(prompt());
+    var mount =
+      slot.hasAttribute("data-page-menu-row") && !slot.querySelector(".page-menu-row")
+        ? (function () {
+            var row = document.createElement("div");
+            row.className = "page-menu-row";
+            slot.appendChild(row);
+            return row;
+          })()
+        : slot;
     var box = document.createElement("div");
     box.className = "pm";
     box.setAttribute("role", "group");
@@ -499,7 +524,8 @@
     details.appendChild(panel);
     box.appendChild(main);
     box.appendChild(details);
-    slot.appendChild(box);
+    mount.appendChild(box);
+    mount.appendChild(buildSoloLink("Ask ChatGPT", "https://chatgpt.com/?q=" + q));
     slot.appendChild(live);
 
     details.addEventListener("toggle", function () {

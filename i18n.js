@@ -319,7 +319,9 @@
     document.documentElement.lang = currentLang;
     document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.classList.toggle('on', btn.getAttribute('data-lang') === currentLang);
+      var on = btn.getAttribute('data-lang') === currentLang;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     document.dispatchEvent(new CustomEvent('glance:lang', { detail: { lang: currentLang } }));
   }
