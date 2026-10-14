@@ -3,6 +3,7 @@
 import pathlib
 import re
 import sys
+from html.parser import HTMLParser
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -21,12 +22,35 @@ FORBIDDEN = [
 SKIP = {".git", ".github", "node_modules", "lib", "scripts"}
 
 
+class _VisibleText(HTMLParser):
+    """Collect text nodes outside script/style (avoids brittle script-tag regexes)."""
+
+    __slots__ = ("_skip_depth", "chunks")
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._skip_depth = 0
+        self.chunks: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        if tag.lower() in ("script", "style"):
+            self._skip_depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() in ("script", "style") and self._skip_depth:
+            self._skip_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip_depth:
+            self.chunks.append(data)
+
+
 def visible_html(raw: str) -> str:
     raw = re.sub(r"<!--.*?-->", "", raw, flags=re.S)
-    raw = re.sub(r"<script[\s\S]*?</script>", "", raw, flags=re.I)
-    raw = re.sub(r"<style[\s\S]*?</style>", "", raw, flags=re.I)
-    raw = re.sub(r"<[^>]+>", " ", raw)
-    return re.sub(r"\s+", " ", raw)
+    parser = _VisibleText()
+    parser.feed(raw)
+    parser.close()
+    return re.sub(r"\s+", " ", " ".join(parser.chunks))
 
 
 def main():
