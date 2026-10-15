@@ -11,6 +11,8 @@ FOOTER_URLS = [
     "https://chatting.elghaly.dev/",
 ]
 
+FOOTER_BLOCK = re.compile(r"<footer\b[^>]*>(.*?)</footer>", re.I | re.S)
+
 FORBIDDEN_WORDS = re.compile(r"\b(live|profit|guarantee|audit|launched)\b", re.I)
 FORBIDDEN = [
     (re.compile(r"qq\.com", re.I), "qq.com"),
@@ -43,6 +45,13 @@ class _VisibleText(HTMLParser):
     def handle_data(self, data: str) -> None:
         if not self._skip_depth:
             self.chunks.append(data)
+
+
+def footer_has_llc(raw: str) -> bool:
+    block = FOOTER_BLOCK.search(raw)
+    if block:
+        return "elghaly, LLC" in block.group(1)
+    return False
 
 
 def visible_html(raw: str) -> str:
@@ -82,8 +91,8 @@ def main():
         head = raw.split("</head>", 1)[0] if re.search(r"</head>", raw, re.I) else raw[:4000]
         is_redir = bool(re.search(r'<meta[^>]+http-equiv=["\']refresh["\']', head, re.I))
         if re.search(r"<!DOCTYPE\s+html|<html\b", raw, re.I) and not is_redir:
-            if "elghaly, LLC" not in raw:
-                errors.append("%s: missing elghaly, LLC" % rel)
+            if not footer_has_llc(raw):
+                errors.append("%s: footer missing elghaly, LLC" % rel)
         vis = visible_html(raw)
         for pat, label in FORBIDDEN:
             if pat.search(vis):
