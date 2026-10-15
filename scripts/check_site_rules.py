@@ -78,7 +78,13 @@ def main():
 
     for path in pages:
         rel = path.relative_to(ROOT)
-        vis = visible_html(path.read_text(encoding="utf-8"))
+        raw = path.read_text(encoding="utf-8")
+        head = raw.split("</head>", 1)[0] if re.search(r"</head>", raw, re.I) else raw[:4000]
+        is_redir = bool(re.search(r'<meta[^>]+http-equiv=["\']refresh["\']', head, re.I))
+        if re.search(r"<!DOCTYPE\s+html|<html\b", raw, re.I) and not is_redir:
+            if "elghaly, LLC" not in raw:
+                errors.append("%s: missing elghaly, LLC" % rel)
+        vis = visible_html(raw)
         for pat, label in FORBIDDEN:
             if pat.search(vis):
                 errors.append("%s: forbidden %s" % (rel, label))
