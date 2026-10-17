@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Glance — honest status for Solana bot operators. Eyes, dry simulate, operator CLEAR only. Synthetic demo. MIT.">
-  <meta name="theme-color" content="#0b1214">
+  <meta name="theme-color" content="#352373">
   <meta property="og:title" content="Glance — honest status for Solana bots">
   <meta property="og:description" content="Open-source observability for Solana bot operators. Try the synthetic demo — it never sends a transaction.">
   <meta property="og:image" content="https://glance.elghaly.dev/glance-card.jpg?v=packaging1">
@@ -25,22 +25,13 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=lang44">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="/fonts/outfit-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=chatting1">
   <style>
-    :root{--font-serif:"Instrument Serif",Georgia,serif;--font-sans:"Inter",ui-sans-serif,system-ui,sans-serif}
-    body{font-family:var(--font-sans)}
-    .gword{font-weight:600;font-size:15px;letter-spacing:.22em;background:linear-gradient(135deg,#d8fff4 0%,#6fe0c4 44%,#9b7dff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-    .house{width:min(640px,calc(100% - 32px));margin:16px auto 0;border-radius:18px;overflow:hidden;border:1px solid var(--gold-dim)}
-    .house img{display:block;width:100%;height:auto}
-    .hero__title,.section__label,.card__name,.public-good__line,.footer p{font-family:var(--font-serif)}
-    .topbar{display:flex;align-items:center;gap:8px}
-    .header-right{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
-    .lang-wrap{position:relative}
-    .lang-switch{display:grid;grid-template-columns:repeat(3,44px);gap:6px}
-    #langs[hidden]{display:none}
+    .gword{font-weight:700;font-size:15px;letter-spacing:.22em;color:var(--text)}
+    .topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .header-right{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0;max-width:100%}
   </style>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="glance">
@@ -56,29 +47,22 @@
       <span class="gword">GLANCE</span>
     </a>
     <div class="header-right">
-      <div class="lang-wrap">
-        <button class="lang-toggle" id="langOpen" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langs" aria-label="Language"><span id="langCur">EN</span><span class="lang-caret" aria-hidden="true">⌄</span></button>
-        <div class="lang-switch" id="langs" role="group" aria-label="Language" hidden>
-          <button class="lang-btn on" data-lang="en" type="button">EN</button>
-          <button class="lang-btn" data-lang="ar" type="button">AR</button>
-          <button class="lang-btn" data-lang="ru" type="button">RU</button>
-          <button class="lang-btn" data-lang="zh" type="button">ZH</button>
-          <button class="lang-btn" data-lang="de" type="button">DE</button>
-          <button class="lang-btn" data-lang="es" type="button">ES</button>
-        </div>
+      <div class="lang-switch" id="langs" role="group" aria-label="Language">
+        <button class="lang-btn on" data-lang="en" type="button" aria-pressed="true">English</button>
+        <button class="lang-btn" data-lang="ar" type="button" aria-pressed="false">العربية</button>
+        <button class="lang-btn" data-lang="ru" type="button" aria-pressed="false">Русский</button>
+        <button class="lang-btn" data-lang="zh" type="button" aria-pressed="false">中文</button>
+        <button class="lang-btn" data-lang="de" type="button" aria-pressed="false">Deutsch</button>
+        <button class="lang-btn" data-lang="es" type="button" aria-pressed="false">Español</button>
       </div>
     </div>
   </div>
 
   <p class="signs signs--top" aria-hidden="true">✝️🧿🪬</p>
 
-  <figure class="house">
-    <img src="glance-card.jpg?v=packaging1" width="1200" height="630" alt="Glance status dashboard preview"/>
-  </figure>
-
   <header class="hero">
     <p class="hero__eyebrow"><span data-i18n="eyebrow">Open source · Developer tooling</span> · <span class="pre1-badge">pre-1.0</span></p>
-    <div class="page-menu" data-page-menu style="display:flex;justify-content:flex-end;min-height:46px;margin:0 0 .5rem"></div>
+    <div class="page-menu" data-page-menu data-page-menu-row style="display:flex;justify-content:flex-end;min-height:46px;margin:0 0 .5rem"></div>
     <h1 class="hero__title">Glance</h1>
     <p class="hero__tag" data-i18n="tag">Honest status for Solana bots</p>
     <p class="status-strip" data-i18n="statusStrip">Eyes + dry compose · no auto-send</p>
@@ -281,12 +265,14 @@ python3 examples/python-cli/glance_cli.py summarize demo/fixture-clear.json</cod
 
   <footer class="footer">
     <p class="signs signs--bottom" aria-hidden="true">3️⃣🧿5️⃣</p>
+    <p class="footer__contact">Email first: <a href="mailto:support@elghaly.dev">support@elghaly.dev</a>. Calls only by appointment.</p>
+    <p>elghaly, LLC</p>
     <p data-i18n="footer">Glance · MIT · pre-1.0</p>
-  <p class="lic-badges"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license">© elghaly · CC BY 4.0</a> <a href="https://github.com/Alarm2024/glance/blob/main/LICENSE">Code: MIT</a> <a href="https://github.com/Alarm2024">Open source</a></p>
+  <p class="lic-badges"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license">© elghaly · CC BY 4.0</a> <a href="https://github.com/Alarm2024/glance/blob/main/LICENSE">Code: MIT</a> <a href="https://github.com/Alarm2024">Open source</a> · <a href="https://chatting.elghaly.dev/">Chatting</a></p>
   </footer>
 
   <script src="themes.js?v=packaging1"></script>
-  <script src="i18n.js?v=lang44"></script>
+  <script src="i18n.js?v=packaging1"></script>
   <script src="app.js?v=packaging1"></script>
 <script src="/page-menu.js" defer></script>
 </body>

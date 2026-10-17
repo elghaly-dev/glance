@@ -5,38 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="CLEAR LAB — synthetic proof cases showing why Glance says HOLD. Reproducible evidence hashes. Dry compose only.">
   <title>CLEAR LAB — synthetic HOLD proof · Glance</title>
-  <link rel="stylesheet" href="../css/style.css?v=a11y3">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=chatting1">
   <style>
     :root { --max-width: 42rem; }
-    body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; align-items: stretch; }
+    body { align-items: stretch; }
     .proof-wrap { width: min(42rem, calc(100% - 32px)); margin: 0 auto; padding: 1.5rem 0 3rem; }
-    .proof-wrap h1, .proof-wrap h2, .proof-wrap h3 { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; }
+    .proof-wrap h1, .proof-wrap h2, .proof-wrap h3 { font-family: var(--font); font-weight: 700; }
     .proof-wrap h1 { font-size: 2rem; margin-bottom: 0.25rem; }
-    .proof-wrap h2 { font-size: 1.35rem; margin: 2rem 0 0.75rem; color: var(--gold-warm); }
+    .proof-wrap h2 { font-size: 1.35rem; margin: 2rem 0 0.75rem; color: var(--gold-2); }
     .proof-wrap h3 { font-size: 1.05rem; margin: 1.25rem 0 0.5rem; }
-    .banner { background: rgba(201, 98, 98, 0.12); border: 1px solid rgba(201, 98, 98, 0.35); border-radius: 12px; padding: 0.75rem 1rem; margin: 1rem 0; font-size: 0.9rem; }
-    .banner--info { background: rgba(46, 230, 199, 0.08); border-color: var(--gold-dim); }
+    .banner { background: rgba(201, 98, 98, 0.12); border: 1px solid rgba(201, 98, 98, 0.35); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin: 1rem 0; font-size: 0.9rem; }
+    .banner--info { background: rgba(13, 11, 31, 0.55); border-color: var(--line-2); }
     .nav { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; font-size: 0.9rem; }
-    .nav a { color: var(--gold-warm); }
-    .step { margin: 0.5rem 0; padding-left: 1rem; border-left: 2px solid var(--gold-dim); }
-    .step strong { color: var(--gold-warm); }
-    .case { border: 1px solid var(--gold-dim); border-radius: 14px; padding: 1rem 1.15rem; margin: 1.25rem 0; background: rgba(18, 26, 25, 0.6); }
-    .case__id { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+    .nav a { color: var(--gold-2); }
+    .step { margin: 0.5rem 0; padding-left: 1rem; border-left: 2px solid var(--line-2); }
+    .step strong { color: var(--gold-2); }
+    .case { border: 1px solid var(--line-2); border-radius: var(--radius-sm); padding: 1rem 1.15rem; margin: 1.25rem 0; background: var(--card); }
+    .case__id { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
     .decision { display: inline-block; font-weight: 600; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; border-radius: 6px; margin: 0.5rem 0; }
     .decision--hold { background: rgba(201, 98, 98, 0.2); color: #f0a8a8; border: 1px solid rgba(201, 98, 98, 0.4); }
-    .hash { font-family: ui-monospace, monospace; font-size: 0.78rem; word-break: break-all; color: var(--text-muted); }
-    pre.fixture { background: var(--ink-muted); border: 1px solid var(--gold-dim); border-radius: 10px; padding: 0.85rem 1rem; overflow-x: auto; font-size: 0.78rem; line-height: 1.45; margin: 0.75rem 0; }
-    .glossary-dl dt { font-weight: 600; color: var(--gold-warm); margin-top: 0.75rem; }
-    .glossary-dl dd { margin-left: 0; color: var(--text-muted); }
-    .glossary-dl a { color: var(--gold-warm); }
-    code { font-family: ui-monospace, monospace; font-size: 0.88em; background: var(--ink-muted); padding: 0.1rem 0.35rem; border-radius: 4px; }
-    .hash-limit, .ai-note { font-size: 0.85rem; color: var(--text-muted); }
-    .observed { margin: 0.75rem 0; color: var(--text-muted); }
+    .hash { font-family: ui-monospace, monospace; font-size: 0.78rem; word-break: break-all; color: var(--muted); }
+    pre.fixture { background: var(--card-2); border: 1px solid var(--line-2); border-radius: var(--radius-sm); padding: 0.85rem 1rem; overflow-x: auto; font-size: 0.78rem; line-height: 1.45; margin: 0.75rem 0; }
+    pre.fixture:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .glossary-dl dt { font-weight: 600; color: var(--gold-2); margin-top: 0.75rem; }
+    .glossary-dl dd { margin-left: 0; color: var(--muted); }
+    .glossary-dl a { color: var(--gold-2); }
+    code { font-family: ui-monospace, monospace; font-size: 0.88em; background: var(--card-2); padding: 0.1rem 0.35rem; border-radius: 4px; }
+    .hash-limit, .ai-note { font-size: 0.85rem; color: var(--muted); }
+    .observed { margin: 0.75rem 0; color: var(--muted); }
   </style>
-  <meta name="theme-color" content="#0b1214">
+  <meta name="theme-color" content="#352373">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -46,13 +44,13 @@
   <div class="topbar">
     <a class="brand" href="/" aria-label="Glance home">
       <span class="gmark" aria-hidden="true"></span>
-      <span class="gword" style="font-weight:600;font-size:15px;letter-spacing:.22em;background:linear-gradient(135deg,#d8fff4 0%,#6fe0c4 44%,#9b7dff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">GLANCE</span>
+      <span class="gword" style="font-weight:700;font-size:15px;letter-spacing:.22em;color:var(--text);">GLANCE</span>
     </a>
   </div>
 
   <main class="proof-wrap">
     <p class="case__id">CLEAR LAB · synthetic proof</p>
-    <div class="page-menu" data-page-menu style="display:flex;justify-content:flex-end;min-height:46px;margin:0 0 .5rem"></div>
+    <div class="page-menu" data-page-menu data-page-menu-row style="display:flex;justify-content:flex-end;min-height:46px;margin:0 0 .5rem"></div>
     <h1>Why the gate says HOLD</h1>
     <p>Dry HOLD only — reproducible synthetic cases. No claims about real trades, no keys, no wallets.</p>
 
@@ -89,7 +87,7 @@
     <section id="reproduce">
       <h2>Reproduce in one command</h2>
       <p>From a fresh clone — no keys, no network, no credentials. Fixtures only. You should see each synthetic case as <strong>HOLD</strong>, with the same evidence hashes as this page.</p>
-      <pre class="fixture">git clone https://github.com/Alarm2024/glance &amp;&amp; cd glance &amp;&amp; python3 scripts/run_proof.py</pre>
+      <pre class="fixture" tabindex="0">git clone https://github.com/Alarm2024/glance &amp;&amp; cd glance &amp;&amp; python3 scripts/run_proof.py</pre>
       <p class="hash-limit"><strong>What the hash proves:</strong> Same evidence in, same hash out. The hash covers the checks, thresholds and reason code, so it proves those were not changed after the fact. It does not cover the rest of the fixture file, and it does not prove the decision was right.</p>
       <div class="step"><strong>Step 1.</strong> Clone the repo. You should see <code>CLEAR LAB — synthetic proof cases</code> header.</div>
       <div class="step"><strong>Step 2.</strong> Runner loads <code>proof/fixtures/*.json</code> — no pip install, no Redis, no RPC.</div>
@@ -110,7 +108,7 @@
         <p class="hash-limit">Same evidence in, same hash out. The hash covers the checks, thresholds and reason code, so it proves those were not changed after the fact. It does not cover the rest of the fixture file, and it does not prove the decision was right.</p>
         <p><strong>Human still needed:</strong> Operator must confirm oracle freshness or switch reference before CLEAR.</p>
         <h3>Input (paste-ready fixture)</h3>
-        <pre class="fixture" id="fixture-stale-oracle">Loading…</pre>
+        <pre class="fixture" id="fixture-stale-oracle" tabindex="0">Loading…</pre>
       </article>
 
       <article class="case" id="case-thin-liquidity">
@@ -122,7 +120,7 @@
         <p class="hash-limit">Same evidence in, same hash out. The hash covers the checks, thresholds and reason code, so it proves those were not changed after the fact. It does not cover the rest of the fixture file, and it does not prove the decision was right.</p>
         <p><strong>Human still needed:</strong> Operator must accept slippage risk or wait for depth before CLEAR.</p>
         <h3>Input (paste-ready fixture)</h3>
-        <pre class="fixture" id="fixture-thin-liquidity">Loading…</pre>
+        <pre class="fixture" id="fixture-thin-liquidity" tabindex="0">Loading…</pre>
       </article>
 
       <article class="case" id="case-refuse-to-classify">
@@ -135,7 +133,7 @@
         <p><strong>Human still needed:</strong> Operator must classify the doctor message, update allowlists, or accept HOLD.</p>
         <p class="ai-note">AI-assisted analysis of public pages.</p>
         <h3>Input (paste-ready fixture)</h3>
-        <pre class="fixture" id="fixture-refuse-to-classify">Loading…</pre>
+        <pre class="fixture" id="fixture-refuse-to-classify" tabindex="0">Loading…</pre>
       </article>
 
       <article class="case" id="case-all-green">
@@ -147,7 +145,7 @@
         <p class="hash-limit">Same evidence in, same hash out. The hash covers the checks, thresholds and reason code, so it proves those were not changed after the fact. It does not cover the rest of the fixture file, and it does not prove the decision was right.</p>
         <p><strong>Human still needed:</strong> Operator must confirm the process is running before CLEAR.</p>
         <h3>Input (paste-ready fixture)</h3>
-        <pre class="fixture" id="fixture-all-green">Loading…</pre>
+        <pre class="fixture" id="fixture-all-green" tabindex="0">Loading…</pre>
       </article>
 
       <article class="case" id="case-mostly-green">
@@ -159,7 +157,7 @@
         <p class="hash-limit">Same evidence in, same hash out. The hash covers the checks, thresholds and reason code, so it proves those were not changed after the fact. It does not cover the rest of the fixture file, and it does not prove the decision was right.</p>
         <p><strong>Human still needed:</strong> Operator must confirm the process is running before CLEAR.</p>
         <h3>Input (paste-ready fixture)</h3>
-        <pre class="fixture" id="fixture-mostly-green">Loading…</pre>
+        <pre class="fixture" id="fixture-mostly-green" tabindex="0">Loading…</pre>
       </article>
 
       <article class="case" id="case-fault-board">
@@ -171,14 +169,14 @@
         <p class="hash-limit">Same evidence in, same hash out. The hash covers the checks, thresholds and reason code, so it proves those were not changed after the fact. It does not cover the rest of the fixture file, and it does not prove the decision was right.</p>
         <p><strong>Human still needed:</strong> Operator must resolve the reported fault before CLEAR.</p>
         <h3>Input (paste-ready fixture)</h3>
-        <pre class="fixture" id="fixture-fault-board">Loading…</pre>
+        <pre class="fixture" id="fixture-fault-board" tabindex="0">Loading…</pre>
       </article>
     </section>
 
     <section id="board">
       <h2>The board itself</h2>
       <p>Everything above seals a <strong>decision</strong>. This seals a <strong>file</strong>. It is a static SVG of the Glance board layout — synthetic, like every fixture on this page.</p>
-      <p><a href="../desk-glance.svg" target="_blank" rel="noopener"><img src="../desk-glance.svg" alt="Glance board — synthetic Telegram desk layout, dry/HOLD posture" width="390" height="520" loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:12px"></a></p>
+      <p><a href="../desk-glance.svg" target="_blank" rel="noopener"><img src="../desk-glance.svg" alt="Glance board — synthetic desk layout, dry/HOLD posture" width="390" height="520" loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:12px"></a></p>
       <p><strong>File hash:</strong><br><span class="hash">a162d898e14004ef1c3c00ca0db7683a1c52343c96b516ea4e7b70a922b74427</span></p>
       <p class="hash-limit"><strong>This is a weaker claim than the cases above.</strong> Same file in, same bytes out. It proves the image has not been changed since it was published. It proves nothing about any decision, nothing about a board that is running, and nothing about any figure drawn on it.</p>
       <div class="step"><strong>Reproduce.</strong> <code>curl -sL "https://glance.elghaly.dev/desk-glance.svg" | sha256sum</code></div>
@@ -196,6 +194,7 @@
     </section>
 
     <footer class="footer" style="margin-top:2rem;text-align:center;">
+      <p>elghaly, LLC</p>
       <p>Glance · MIT · synthetic proof only</p>
     <p class="lic-badges"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license">© elghaly · CC BY 4.0</a> <a href="https://github.com/Alarm2024/glance/blob/main/LICENSE">Code: MIT</a> <a href="https://github.com/Alarm2024">Open source</a> <span>AI-assisted analysis of public pages</span></p>
     </footer>
