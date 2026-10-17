@@ -1,9 +1,9 @@
-/* page-menu.js — the "Ask Claude | ⌄" button at the top of a content page.
+/* page-menu.js — the "Ask ChatGPT | ⌄" button at the top of a content page.
  *
- * One split button: the main half opens this page in Claude; the ⌄ half
- * opens a menu with Copy page, View as Markdown, Open in ChatGPT and Open in
- * Cursor. Plain JS. No tracking, no cookies, no network calls: the Markdown
- * is built from the page in this tab, so it is always the page as it is now.
+ * One split button: the main half opens this page in ChatGPT; the ⌄ half
+ * opens a menu with Copy page. Plain JS. No tracking, no
+ * cookies, no network calls: the Markdown is built from the page in this tab,
+ * so it is always the page as it is now.
  *
  * Use: put <div class="page-menu" data-page-menu></div> where the button
  * goes (reserve 44px of height inline, so nothing moves when it fills in),
@@ -21,10 +21,8 @@
     ".pm{position:relative;display:inline-flex;align-items:stretch;min-height:44px;" +
     "border:1px solid rgba(127,127,127,.45);border-radius:14px;font-size:1rem;line-height:1.2;" +
     "font-weight:600;background:rgba(127,127,127,.06)}" +
-    ".page-menu-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;width:100%}" +
     ".pm-main,.pm-more>summary{display:inline-flex;align-items:center;justify-content:center;" +
     "color:inherit;cursor:pointer;-webkit-user-select:none;user-select:none;white-space:nowrap}" +
-    ".pm--solo .pm-main{border-radius:13px}" +
     // Logical corners: the browser picks the outer edge from the text
     // direction, so a language switch to Arabic needs no script to follow it.
     ".pm-main{gap:.55rem;padding:0 1.1rem;border-start-start-radius:13px;" +
@@ -436,41 +434,15 @@
   }
 
   // ── render ──────────────────────────────────────────────────────────────
-  function claudeUrl(q) { return "https://claude.ai/new?q=" + q; }
+  function chatgptUrl(q) { return "https://chatgpt.com/?q=" + q; }
 
-  // The ⌄ menu: everything except Claude, which is the button itself.
+  // The ⌄ menu: Copy. ChatGPT is the button itself.
   var ITEMS = [
-    { act: "copy", label: "Copy page", sub: "Markdown for AI tools" },
-    { act: "md", label: "View as Markdown", sub: "Plain text" },
-    { href: function (q) { return "https://chatgpt.com/?q=" + q; }, label: "Open in ChatGPT" },
-    { href: function (q) { return "https://cursor.com/link/prompt?text=" + q; }, label: "Open in Cursor" }
+    { act: "copy", label: "Copy page", sub: "Markdown for AI tools" }
   ];
-
-  function buildSoloLink(label, href) {
-    var solo = document.createElement("div");
-    solo.className = "pm pm--solo";
-    solo.setAttribute("role", "group");
-    var link = document.createElement("a");
-    link.className = "pm-main";
-    link.href = href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.innerHTML = SPARK + "<span>" + label + "</span>";
-    solo.appendChild(link);
-    return solo;
-  }
 
   function build(slot) {
     var q = encodeURIComponent(prompt());
-    var mount =
-      slot.hasAttribute("data-page-menu-row") && !slot.querySelector(".page-menu-row")
-        ? (function () {
-            var row = document.createElement("div");
-            row.className = "page-menu-row";
-            slot.appendChild(row);
-            return row;
-          })()
-        : slot;
     var box = document.createElement("div");
     box.className = "pm";
     box.setAttribute("role", "group");
@@ -478,15 +450,15 @@
 
     var main = document.createElement("a");
     main.className = "pm-main";
-    main.href = claudeUrl(q);
+    main.href = chatgptUrl(q);
     main.target = "_blank";
     main.rel = "noopener noreferrer";
-    main.innerHTML = SPARK + "<span>Ask Claude</span>";
+    main.innerHTML = SPARK + "<span>Ask ChatGPT</span>";
 
     var details = document.createElement("details");
     details.className = "pm-more";
     var summary = document.createElement("summary");
-    summary.setAttribute("aria-label", "More AI options: copy page, Markdown, ChatGPT, Cursor");
+    summary.setAttribute("aria-label", "More options: copy page");
     summary.innerHTML = CHEV;
     var panel = document.createElement("div");
     panel.className = "pm-panel";
@@ -524,8 +496,7 @@
     details.appendChild(panel);
     box.appendChild(main);
     box.appendChild(details);
-    mount.appendChild(box);
-    mount.appendChild(buildSoloLink("Ask ChatGPT", "https://chatgpt.com/?q=" + q));
+    slot.appendChild(box);
     slot.appendChild(live);
 
     details.addEventListener("toggle", function () {
