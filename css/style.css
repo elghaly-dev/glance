@@ -3,8 +3,9 @@
 
 :root {
   color-scheme: dark;
-  --bg: #5a4fc0;
-  --bg-2: #6a5fd0;
+  /* page night, as elghaly.dev: --night #07080c, --night-2 #0d1120 */
+  --bg: #07080c;
+  --bg-2: #0d1120;
   --card: #0d0b1f;
   --card-2: #17142f;
   --line: #1c1838;
@@ -53,6 +54,7 @@
 }
 
 html {
+  background: var(--bg);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
@@ -62,13 +64,22 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(165deg, var(--bg-2) 0%, var(--bg) 42%, #4a42a8 100%);
+  /* the elghaly.dev page background: night with a lapis glow on top */
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(42, 76, 179, .30), transparent 60%),
+    radial-gradient(80% 50% at 50% 110%, rgba(196, 161, 236, .10), transparent 70%),
+    var(--bg);
   color: var(--text);
   font-family: var(--font);
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+/* The other themes in the menu keep their own two-tone page. */
+html[data-theme]:not([data-theme="midnight"]) body {
+  background: linear-gradient(165deg, var(--bg-2) 0%, var(--bg) 42%, var(--bg) 100%);
 }
 
 /* Top bar */
@@ -81,7 +92,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 10px var(--gutter);
-  background: rgba(13, 11, 31, 0.72);
+  background: rgba(13, 17, 32, 0.7);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line-2);
 }

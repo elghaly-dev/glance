@@ -1,8 +1,8 @@
 (function () {
   var KEY = 'house-theme';
   var CHATTING = {
-    bg: '#5a4fc0',
-    bg2: '#6a5fd0',
+    bg: '#07080c',
+    bg2: '#0d1120',
     card: '#0d0b1f',
     card2: '#17142f',
     line: '#1c1838',
